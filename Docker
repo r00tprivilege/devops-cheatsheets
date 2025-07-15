@@ -1,43 +1,111 @@
-### 🐳 **Docker Essentials Cheat Sheet**
+Absolutely, Mohamad. Here’s a curated list of essential Docker commands tailored for a DevSecOps engineer working in a DevOps ecosystem. These focus on container lifecycle management, image security, and integration into CI/CD workflows—with an emphasis on clarity and real-world utility.
 
-#### 📦 **Container Lifecycle**
-- `docker run -it <image>` — Run a container interactively
-- `docker ps` — List running containers
-- `docker ps -a` — List all containers (including stopped)
-- `docker stop <container>` — Stop a running container
-- `docker start <container>` — Start a stopped container
-- `docker rm <container>` — Remove a container
-- `docker exec -it <container> bash` — Access container shell
+```markdown
+# 🐳 Docker Essentials for DevSecOps Engineers
 
-#### 🖼️ **Image Management**
-- `docker images` — List local images
-- `docker pull <image>` — Download image from Docker Hub
-- `docker build -t <name> .` — Build image from Dockerfile
-- `docker rmi <image>` — Remove image
-- `docker tag <image> <repo>:<tag>` — Tag image for registry
-- `docker push <repo>:<tag>` — Push image to registry
+> A compact toolkit of Docker commands for secure development, efficient operations, and smooth pipeline integration.
 
-#### 🧱 **Volumes & Networks**
-- `docker volume create <name>` — Create volume
-- `docker volume ls` — List volumes
-- `docker network create <name>` — Create network
-- `docker network ls` — List networks
-- `docker network connect <network> <container>` — Connect container to network
+---
 
-#### 🔍 **Inspection & Logs**
-- `docker inspect <container>` — Detailed container info
-- `docker logs <container>` — View container logs
-- `docker stats` — Live resource usage
-- `docker diff <container>` — Changes in container filesystem
+## 📦 Image Management
 
-#### 🛠️ **System Cleanup**
-- `docker system prune -a` — Remove unused containers, images, volumes
-- `docker image prune` — Remove dangling images
-- `docker container prune` — Remove stopped containers
+- **Pull trusted base image**
+  ```bash
+  docker pull ubuntu:20.04
+  ```
+- **Build secure image from Dockerfile**
+  ```bash
+  docker build -t secure-app:latest .
+  ```
+- **Tag for version control or registry push**
+  ```bash
+  docker tag secure-app:latest registry.example.com/devsecops/secure-app:v1.0.0
+  ```
+- **Push to private registry**
+  ```bash
+  docker push registry.example.com/devsecops/secure-app:v1.0.0
+  ```
 
-#### 🧬 **Docker Compose**
-- `docker-compose up` — Start services
-- `docker-compose down` — Stop and remove services
-- `docker-compose build` — Build services
-- `docker-compose logs` — View logs
+---
 
+## 🔐 Security Checks
+
+- **Scan image for vulnerabilities (Trivy)**
+  ```bash
+  trivy image secure-app:latest
+  ```
+- **Audit running container for package risks**
+  ```bash
+  trivy fs /var/lib/docker/overlay2/<container_id>/
+  ```
+- **Check Dockerfile for misconfigurations (Hadolint)**
+  ```bash
+  hadolint Dockerfile
+  ```
+
+---
+
+## 📁 Container Operations
+
+- **Run container interactively**
+  ```bash
+  docker run -it --name devsecops-app secure-app:latest /bin/bash
+  ```
+- **Start/stop container**
+  ```bash
+  docker start devsecops-app
+  docker stop devsecops-app
+  ```
+- **Remove container/image**
+  ```bash
+  docker rm devsecops-app
+  docker rmi secure-app:latest
+  ```
+
+---
+
+## 📊 Monitoring & Logs
+
+- **View real-time logs**
+  ```bash
+  docker logs -f devsecops-app
+  ```
+- **Inspect metadata**
+  ```bash
+  docker inspect devsecops-app
+  ```
+- **Check resource usage**
+  ```bash
+  docker stats devsecops-app
+  ```
+
+---
+
+## 🔄 CI/CD Integration Snippets
+
+- **Use Docker in GitHub Actions**
+  ```yaml
+  jobs:
+    docker-build:
+      runs-on: ubuntu-latest
+      steps:
+        - name: Build Docker image
+          run: docker build -t secure-app .
+  ```
+
+- **Clean up dangling images to reduce attack surface**
+  ```bash
+  docker image prune -f
+  ```
+
+---
+
+## 🧼 Hardening Best Practices
+
+- Use non-root user inside container
+- Set `HEALTHCHECK` in Dockerfile
+- Avoid exposing sensitive ports by default
+- Minimize use of `ADD`; prefer `COPY`
+```
+
+If you want, I can tailor this for a specific platform like GitLab CI, Jenkins, or even integrate advanced runtime security tools like Falco or Sysdig. Just say the word 🚀
