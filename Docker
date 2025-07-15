@@ -1,0 +1,43 @@
+### 🐳 **Docker Essentials Cheat Sheet**
+
+#### 📦 **Container Lifecycle**
+- `docker run -it <image>` — Run a container interactively
+- `docker ps` — List running containers
+- `docker ps -a` — List all containers (including stopped)
+- `docker stop <container>` — Stop a running container
+- `docker start <container>` — Start a stopped container
+- `docker rm <container>` — Remove a container
+- `docker exec -it <container> bash` — Access container shell
+
+#### 🖼️ **Image Management**
+- `docker images` — List local images
+- `docker pull <image>` — Download image from Docker Hub
+- `docker build -t <name> .` — Build image from Dockerfile
+- `docker rmi <image>` — Remove image
+- `docker tag <image> <repo>:<tag>` — Tag image for registry
+- `docker push <repo>:<tag>` — Push image to registry
+
+#### 🧱 **Volumes & Networks**
+- `docker volume create <name>` — Create volume
+- `docker volume ls` — List volumes
+- `docker network create <name>` — Create network
+- `docker network ls` — List networks
+- `docker network connect <network> <container>` — Connect container to network
+
+#### 🔍 **Inspection & Logs**
+- `docker inspect <container>` — Detailed container info
+- `docker logs <container>` — View container logs
+- `docker stats` — Live resource usage
+- `docker diff <container>` — Changes in container filesystem
+
+#### 🛠️ **System Cleanup**
+- `docker system prune -a` — Remove unused containers, images, volumes
+- `docker image prune` — Remove dangling images
+- `docker container prune` — Remove stopped containers
+
+#### 🧬 **Docker Compose**
+- `docker-compose up` — Start services
+- `docker-compose down` — Stop and remove services
+- `docker-compose build` — Build services
+- `docker-compose logs` — View logs
+
