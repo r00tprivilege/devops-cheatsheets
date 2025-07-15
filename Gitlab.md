@@ -326,20 +326,20 @@ curl -X POST https://defectdojo.example.com/api/v2/import-scan/ \
 
 ```mermaid
 flowchart TD
-  subgraph Dev[GitLab CI/CD]
+  subgraph GitLab_CI_CD[GitLab CI/CD]
     A[Code Commit]
-    B[CI/CD Pipeline Triggered]
-    C[Security Scans]
-    A --> B --> C
+    B[Pipeline Triggered]
+    C[Run Security Scans]
 
     subgraph Scanners
       C1[Semgrep]
       C2[Trivy]
       C3[OWASP ZAP]
-      C4[Dependency-Check]
+      C4[Dependency Check]
       C5[Gitleaks]
     end
 
+    A --> B --> C
     C --> C1 --> E[Scan Reports]
     C --> C2 --> E
     C --> C3 --> E
@@ -347,19 +347,19 @@ flowchart TD
     C --> C5 --> E
   end
 
-  E --> F[DefectDojo API Upload]
+  E --> F[Upload to DefectDojo]
 
-  subgraph Dojo[DefectDojo]
-    F --> G[Centralized Dashboard]
-    G --> H[Engagements & Products]
-    G --> I[Merge Request Feedback (via CI comment)]
+  subgraph DefectDojo
+    F --> G[Central Dashboard]
+    G --> H[Engagements and Products]
+    G --> I[MR Feedback via CI Comment]
     G --> J[Compliance Reports]
-    G --> K[Jira Sync]
-    G --> L[External API for Dashboards]
+    G --> K[Sync with Jira]
+    G --> L[API for External Dashboards]
   end
 
-  K --> M[Jira]
-  L --> N[Grafana / Power BI]
+  K --> M[Jira Issues]
+  L --> N[Grafana or Power BI]
 ```
 
 ---
