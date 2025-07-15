@@ -1,5 +1,3 @@
-Absolutely, Mohamad. Here’s a curated list of essential Docker commands tailored for a DevSecOps engineer working in a DevOps ecosystem. These focus on container lifecycle management, image security, and integration into CI/CD workflows—with an emphasis on clarity and real-world utility.
-
 ```markdown
 # 🐳 Docker Essentials for DevSecOps Engineers
 
