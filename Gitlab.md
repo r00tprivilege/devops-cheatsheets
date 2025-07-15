@@ -228,6 +228,150 @@ dast:
 - 📈 **Track Metrics:** Vulnerability trends, remediation velocity, scan coverage
 
 ---
+
+# 🛡️ DefectDojo Capabilities for DevSecOps Reporting & Integration
+
+DefectDojo provides a centralized platform to **track, visualize, and export vulnerabilities** across your security pipeline. Below are key features and how to implement them.
+
+---
+
+## 📊 Security Dashboard: Centralized View Across Projects
+
+DefectDojo’s dashboard aggregates findings from all products and engagements.
+
+### 🔹 Features
+- Severity breakdown (pie chart & histogram)
+- Top/Bottom graded products
+- SLA violations and critical findings
+- Historical trends by month
+
+### 🔹 How to Use
+- Navigate to `Home → Dashboard`
+- Customize tiles and charts via `Dashboard Configuration`
+- Role-based access ensures users only see data they’re authorized for
+
+📖 [Dashboard Guide](https://docs.defectdojo.com/en/customize_dojo/dashboards/introduction_dashboard/)
+
+---
+
+## 🔍 Merge Request Reports: Inline Security Findings
+
+While DefectDojo doesn’t natively inject findings into Git merge requests, you can achieve this via CI/CD integration:
+
+### 🔹 Strategy
+- Run scans (e.g., Semgrep, Trivy) in your pipeline
+- Upload results to DefectDojo using API
+- Use GitLab/GitHub Actions to fetch findings and comment on MRs
+
+### 🔹 Example Workflow
+```yaml
+# GitLab CI job
+script:
+  - semgrep --json > semgrep.json
+  - python upload_to_defectdojo.py --report semgrep.json
+  - python comment_on_mr.py --findings semgrep.json
+```
+
+📖 [Semgrep + DefectDojo Integration](https://semgrep.dev/docs/kb/integrations/defect-dojo-integration)
+
+---
+
+## ✅ Compliance Frameworks: Policies & Audit Trails
+
+DefectDojo supports compliance tracking through:
+
+### 🔹 Features
+- Engagement Questionnaires for audit readiness
+- SLA tracking per product
+- Risk acceptance workflows
+- Role-based access and activity logs
+
+### 🔹 How to Use
+- Create `Compliance Engagements` with questionnaires
+- Use `Accepted Findings` and `Risk Accepted` status
+- Export reports for auditors via Report Builder
+
+📖 [Compliance & Reporting Docs](https://docs.defectdojo.com/)
+
+---
+
+## 🔄 Third-party Integration: Jira, Dashboards, DefectDojo API
+
+DefectDojo integrates with external tools for ticketing and visualization.
+
+### 🔹 Jira Integration
+- Push findings to Jira as issues
+- Bi-directional sync: closing Jira issue closes DefectDojo finding
+- Map resolutions to risk acceptance or false positives
+
+📖 [Jira Integration Guide](https://docs.defectdojo.com/en/share_your_findings/jira_guide/)
+
+### 🔹 Dashboarding (Grafana, Power BI)
+- Use DefectDojo API to extract metrics
+- Feed data into external BI tools for executive dashboards
+
+### 🔹 API Usage
+```bash
+curl -X POST https://defectdojo.example.com/api/v2/import-scan/ \
+  -H "Authorization: Token YOUR_API_TOKEN" \
+  -F "file=@semgrep.json" \
+  -F "scan_type=Semgrep Scan" \
+  -F "product_name=MyApp"
+```
+
+📖 [API Docs](https://docs.defectdojo.com/en/api-docs/)
+---
+
+# 🌐 DevSecOps Pipeline with DefectDojo Integration — Mermaid Diagram
+
+```mermaid
+flowchart TD
+  subgraph Dev[GitLab CI/CD]
+    A[Code Commit]
+    B[CI/CD Pipeline Triggered]
+    C[Security Scans]
+    A --> B --> C
+
+    subgraph Scanners
+      C1[Semgrep]
+      C2[Trivy]
+      C3[OWASP ZAP]
+      C4[Dependency-Check]
+      C5[Gitleaks]
+    end
+
+    C --> C1 --> E[Scan Reports]
+    C --> C2 --> E
+    C --> C3 --> E
+    C --> C4 --> E
+    C --> C5 --> E
+  end
+
+  E --> F[DefectDojo API Upload]
+
+  subgraph Dojo[DefectDojo]
+    F --> G[Centralized Dashboard]
+    G --> H[Engagements & Products]
+    G --> I[Merge Request Feedback (via CI comment)]
+    G --> J[Compliance Reports]
+    G --> K[Jira Sync]
+    G --> L[External API for Dashboards]
+  end
+
+  K --> M[Jira]
+  L --> N[Grafana / Power BI]
+```
+
+---
+
+## 📌 Diagram Highlights
+
+- **Scanners** feed their results into **DefectDojo** via API
+- DefectDojo creates centralized views per **product** and **engagement**
+- Findings can be pushed to **Jira**, displayed in **Grafana**, or used for **MR feedback**
+- GitLab CI/CD orchestrates everything from code to scan execution
+
+---
 Here’s a complete Markdown-based guide that includes:
 
 1. A **Mermaid diagram** to visualize a GitLab DevSecOps pipeline
