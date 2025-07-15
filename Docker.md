@@ -105,5 +105,3 @@
 - Avoid exposing sensitive ports by default
 - Minimize use of `ADD`; prefer `COPY`
 ```
-
-If you want, I can tailor this for a specific platform like GitLab CI, Jenkins, or even integrate advanced runtime security tools like Falco or Sysdig. Just say the word 🚀
