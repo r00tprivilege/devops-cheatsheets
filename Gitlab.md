@@ -318,7 +318,7 @@ curl -X POST https://defectdojo.example.com/api/v2/import-scan/ \
   -F "scan_type=Semgrep Scan" \
   -F "product_name=MyApp"
 ```
-
+ 
 📖 [API Docs](https://docs.defectdojo.com/en/api-docs/)
 ---
 
