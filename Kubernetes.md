@@ -132,4 +132,3 @@ deploy:
 - Limit container capabilities with `securityContext`
 - Prefer Secrets and ConfigMaps over hardcoded env variables
 ```
-
